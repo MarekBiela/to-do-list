@@ -12,7 +12,6 @@ from .views import (
     toggle_complete_undo_task,
 )
 
-
 urlpatterns = [
     path("", TaskListView.as_view(), name="index"),
     path("create/", TaskCreateView.as_view(), name="create"),
