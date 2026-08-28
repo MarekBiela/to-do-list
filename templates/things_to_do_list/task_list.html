@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    TODO list
+    <a href="{% url 'things_to_do_list:create' %}">
+        Add task
+    </a>
+  </h1>
+  {% if task_list %}
+    <div>
+      {% for task in task_list %}
+      <p>
+        {{ task.name }}
+        {% if task.is_done %}
+          Done
+          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}">Undo</a>
+        {% else %}
+          Not done
+          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}">Complete</a>
+        {% endif %}
+      </p>
+      <p>
+        Created: {{ task.created_at }}
+        {% if task.deadline %}
+          Deadline: {{ task.deadline }}
+        {% endif %}
+      </p>
+      <p>
+        Tags:
+        {% for tag in task.tags.all %}
+          {{ tag.name }}
+        {% endfor %}
+        <a href="{% url 'things_to_do_list:update' pk=task.id %}">
+          Update
+        </a>
+        <a href="{% url 'things_to_do_list:delete' pk=task.id %}">
+          Delete
+        </a>
+      </p>
+      <hr>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No tasks have been added yet.</p>
+  {% endif %}
+{% endblock %}

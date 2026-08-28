@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Tags
+    <a href="{% url 'things_to_do_list:tag-create' %}">
+        Add tag
+    </a>
+  </h1>
+  {% if tag_list %}
+    <hr>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+      {% for tag in tag_list %}
+        <tr>
+          <td>{{ tag.name }}</td>
+          <td>
+            <a href="{% url 'things_to_do_list:tag-update' pk=tag.id %}">
+              Update
+            </a>
+          </td>
+          <td>
+            <a href="{% url 'things_to_do_list:tag-delete' pk=tag.id %}">
+              Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>No tags have been added yet.</p>
+  {% endif %}
+{% endblock %}
