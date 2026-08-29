@@ -3,38 +3,43 @@
 {% block content %}
   <h1>
     TODO list
-    <a href="{% url 'things_to_do_list:create' %}">
+    <a href="{% url 'things_to_do_list:create' %}" class="btn btn-primary btn-lg">
         Add task
     </a>
   </h1>
+  <hr>
   {% if task_list %}
     <div>
       {% for task in task_list %}
       <p>
-        {{ task.name }}
+        <span class="fs-4 fw-bold"> {{ task.name }} </span>
         {% if task.is_done %}
-          Done
-          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}">Undo</a>
+        <span class="fs-4 fw-bold text-success"> Done </span>
+          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}" class="btn btn-secondary">Undo</a>
         {% else %}
-          Not done
-          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}">Complete</a>
+        <span class="fs-4 fw-bold text-danger"> Not done </span>
+          <a href="{% url 'things_to_do_list:toggle-complete-undo' task.pk %}" class="btn btn-secondary">Complete</a>
         {% endif %}
       </p>
       <p>
-        Created: {{ task.created_at }}
+        <strong> Created: </strong>
+        {{ task.created_at }}
         {% if task.deadline %}
-          Deadline: {{ task.deadline }}
+          <strong> Deadline: </strong>
+          {{ task.deadline }}
         {% endif %}
       </p>
       <p>
-        Tags:
-        {% for tag in task.tags.all %}
-          {{ tag.name }}
-        {% endfor %}
-        <a href="{% url 'things_to_do_list:update' pk=task.id %}">
+        <span class="badge bg-info">
+          Tags:
+          {% for tag in task.tags.all %}
+            {{ tag.name }}
+          {% endfor %}
+        </span>
+        <a href="{% url 'things_to_do_list:update' pk=task.id %}" class="btn btn-secondary btn-sm">
           Update
         </a>
-        <a href="{% url 'things_to_do_list:delete' pk=task.id %}">
+        <a href="{% url 'things_to_do_list:delete' pk=task.id %}" class="btn btn-secondary btn-sm">
           Delete
         </a>
       </p>
